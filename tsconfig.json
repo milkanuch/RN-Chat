@@ -12,5 +12,8 @@
       "assets/*": ["src/assets/*"],
       "store/*": ["src/store/*"],
     },
+    //SOURCE: https://mobx.js.org/enabling-decorators.html
+    "experimentalDecorators": true,
+    "useDefineForClassFields": true,
   }
 }
