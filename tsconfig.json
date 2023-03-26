@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true, 
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "components/*": ["src/components/*"],
       "constants/*": ["src/constants/*"],
