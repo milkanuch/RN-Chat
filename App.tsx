@@ -1,11 +1,7 @@
-import { Text, View } from 'react-native';
+import { AppNavigation } from 'navigation/AppNavigation/AppNavigation';
 
 const App = () => {
-  return (
-    <View>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+  return <AppNavigation />;
 };
 
 export default App;
