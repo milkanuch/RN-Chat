@@ -46,8 +46,9 @@ const TYPESCRIPT_RULES = {
 };
 
 const IMPORT_RULES = {
-  'import/newline-after-import': [ERROR, { count: COUNT }],
   'import/export': OFF,
+  'import/no-default-export': ERROR,
+  'import/newline-after-import': [ERROR, { count: COUNT }],
   'import/order': [
     ERROR,
     {
