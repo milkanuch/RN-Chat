@@ -20,8 +20,17 @@ module.exports = function (api) {
       ],
       //SOURCE: https://mobx.js.org/enabling-decorators.html#babel-7
       ['@babel/plugin-proposal-decorators', { legacy: true }],
-      ['@babel/plugin-proposal-class-properties'],
       ['@babel/plugin-transform-flow-strip-types'],
+    ],
+    overrides: [
+      {
+        plugins: [
+          [
+            require('@babel/plugin-proposal-class-properties'),
+            { loose: false },
+          ],
+        ],
+      },
     ],
     //SOURCE: https://babeljs.io/docs/assumptions
     assumptions: {
