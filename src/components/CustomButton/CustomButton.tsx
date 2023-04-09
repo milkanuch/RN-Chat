@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-import { styles } from 'components/CustomButton/customButton.style';
+import { styles } from 'components/CustomButton/customButton.styles';
 import { Icon } from 'components/Icon/Icon';
 
 import { CustomButtonProps } from './customButton.types';
