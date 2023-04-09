@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { ChatScreen } from 'screens/ChatScreen/ChatScreen';
 
-import { BottomTabNavigation } from 'navigation/BottomTab/BottomTabNavigation';
+import { BottomTabNavigation } from 'navigation/BottomTabNavigation/BottomTabNavigation';
 
 import {
   CHAT_SCREEN_OPTIONS,
