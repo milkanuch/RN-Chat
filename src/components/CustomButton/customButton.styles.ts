@@ -6,15 +6,16 @@ export const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: COLORS.blue,
+    borderRadius: 4,
     justifyContent: 'center',
   },
   icon: {
     backgroundColor: COLORS.transparent,
-    padding: 2,
+    paddingHorizontal: 4,
   },
   text: {
     color: COLORS.light.primary[200],
     fontSize: 16,
-    padding: 12,
+    padding: 15,
   },
 });
