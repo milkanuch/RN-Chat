@@ -22,8 +22,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.light.primary[200],
-    fontFamily: SPACE_GROTESK_REGULAR.fontFamily,
     fontSize: 16,
-    fontWeight: SPACE_GROTESK_REGULAR.fontWeight,
+    ...SPACE_GROTESK_REGULAR,
   },
 });
