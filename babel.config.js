@@ -20,17 +20,9 @@ module.exports = function (api) {
       ],
       //SOURCE: https://mobx.js.org/enabling-decorators.html#babel-7
       ['@babel/plugin-proposal-decorators', { legacy: true }],
-      ['@babel/plugin-transform-flow-strip-types'],
-    ],
-    overrides: [
-      {
-        plugins: [
-          [
-            require('@babel/plugin-proposal-class-properties'),
-            { loose: false },
-          ],
-        ],
-      },
+      ['@babel/plugin-transform-flow-strip-types', { loose: false }],
+      //SOURCE: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/
+      'react-native-reanimated/plugin',
     ],
     //SOURCE: https://babeljs.io/docs/assumptions
     assumptions: {

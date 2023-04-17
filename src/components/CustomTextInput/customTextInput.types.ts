@@ -1,3 +1,6 @@
-import { TextInput } from 'react-native';
+import { TextInputProps, TextStyle } from 'react-native';
 
-export type CustomTextInputProps = TextInput['props'];
+export type CustomTextInputProps = TextInputProps & {
+  label?: string;
+  labelStyle?: TextStyle;
+};
