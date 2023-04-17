@@ -10,4 +10,9 @@ export const styles = StyleSheet.create({
   inputContainer: {
     backgroundColor: COLORS.light.primary[200],
   },
+  label: {
+    color: COLORS.darkBlue,
+    fontSize: 14,
+    marginVertical: 5,
+  },
 });
