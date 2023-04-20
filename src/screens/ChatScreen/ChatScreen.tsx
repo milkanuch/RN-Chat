@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { View, Text } from 'react-native';
 
 import { ChatScreenProp } from 'navigation/AppStackNavigation/appStackNavigation.types';
