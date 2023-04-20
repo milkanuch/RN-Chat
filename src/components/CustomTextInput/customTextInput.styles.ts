@@ -3,6 +3,12 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from 'constants/color';
 
 export const styles = StyleSheet.create({
+  error: {
+    color: COLORS.red,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 4,
+  },
   input: {
     padding: 8,
     paddingLeft: 14,

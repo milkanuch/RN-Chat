@@ -49,3 +49,5 @@ export const SHAKE_ANIMATION = {
 export const SHAKE_ANIMATION_CONFIG = { duration: 100, easing: Easing.linear };
 
 export const PROGRESS_ANIMATION_DURATION = { duration: 500 };
+//NOTE: title
+export const TITLE = 'Authorization';

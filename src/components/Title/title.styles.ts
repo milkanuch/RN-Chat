@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'flex-end',
   },
   title: {
     color: COLORS.darkBlue,

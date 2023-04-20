@@ -64,4 +64,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: MARGIN,
   },
+  titleContainer: {
+    justifyContent: 'flex-end',
+  },
 });

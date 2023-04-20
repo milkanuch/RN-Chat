@@ -14,10 +14,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnimatedButton } from 'components/AnimatedButton/AnimatedButton';
 import { CustomTextInput } from 'components/CustomTextInput/CustomTextInput';
+import { Title } from 'components/Title/Title';
 
 import { COLORS } from 'constants/color';
 
-import { SignInScreenTitle } from './SignInScreenTitle/SignInScreenTitle';
 import { signInScheme } from './signInScreen.schema';
 import { getAuthorizationProgress } from './signInScreen.utils';
 
@@ -30,6 +30,7 @@ import {
   SHAKE_ANIMATION,
   SHAKE_ANIMATION_CONFIG,
   PROGRESS_ANIMATION_DURATION,
+  TITLE,
 } from './signInScreen.settings';
 import { styles } from './signInScreen.styles';
 import { SignInForm } from './signInScreen.types';
@@ -103,7 +104,7 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <SignInScreenTitle />
+      <Title containerStyle={styles.titleContainer} title={TITLE} />
       <View style={styles.container}>
         <View>
           <Text style={styles.label}>{PHONE_NUMBER_SETTINGS.label}</Text>
@@ -140,6 +141,7 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
             name={PASSWORD_SETTINGS.name}
             render={({ field: { onChange: handlePhoneNumber, value } }) => (
               <CustomTextInput
+                error={errors.password?.message}
                 label={PASSWORD_SETTINGS.label}
                 onChangeText={handlePhoneNumber}
                 placeholder={PASSWORD_SETTINGS.placeholder}
@@ -149,9 +151,6 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
               />
             )}
           />
-          {!!errors.password && (
-            <Text style={styles.error}>{errors.password.message}</Text>
-          )}
         </View>
 
         {!isUserRegistered && (
@@ -162,6 +161,7 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
               name={CONFIRM_PASSWORD_SETTINGS.name}
               render={({ field: { onChange: handlePhoneNumber, value } }) => (
                 <CustomTextInput
+                  error={errors.confirmPassword?.message}
                   label={CONFIRM_PASSWORD_SETTINGS.label}
                   onChangeText={handlePhoneNumber}
                   placeholder={CONFIRM_PASSWORD_SETTINGS.placeholder}
@@ -171,9 +171,6 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
                 />
               )}
             />
-            {!!errors.confirmPassword && (
-              <Text style={styles.error}>{errors.confirmPassword.message}</Text>
-            )}
           </View>
         )}
 
