@@ -8,6 +8,7 @@ export const CustomTextInput: FC<CustomTextInputProps> = ({
   value,
   label,
   children,
+  error,
   onChangeText: handleTextInput,
   ...props
 }) => {
@@ -21,6 +22,7 @@ export const CustomTextInput: FC<CustomTextInputProps> = ({
           value={value}
           {...props}
         />
+        {!!error && <Text>{error}</Text>}
       </View>
       {children}
     </View>
