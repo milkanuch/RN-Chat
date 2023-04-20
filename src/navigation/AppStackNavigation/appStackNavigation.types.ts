@@ -1,12 +1,14 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { ChatScreenParams } from 'screens/ChatScreen/chatScreen.types';
+
 export enum AppStackTypes {
   ChatScreen = 'ChatScreen',
   AppBottomTabNavigation = 'AppBottomTabNavigation',
 }
 
 export type AppStackParamsList = {
-  [AppStackTypes.ChatScreen]: undefined;
+  [AppStackTypes.ChatScreen]: ChatScreenParams;
   [AppStackTypes.AppBottomTabNavigation]: undefined;
 };
 

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, Text } from 'react-native';
 
-export const ChatScreen = () => {
+import { ChatScreenProp } from 'navigation/AppStackNavigation/appStackNavigation.types';
+
+export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
+  const { id } = route.params;
   return (
     <View>
-      <Text>ChatScreen</Text>
+      <Text>ChatScreen{id}</Text>
     </View>
   );
 };
