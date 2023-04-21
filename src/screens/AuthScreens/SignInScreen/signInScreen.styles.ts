@@ -60,7 +60,6 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
   },
   screen: {
-    backgroundColor: COLORS.light.primary[400],
     flex: 1,
     paddingHorizontal: MARGIN,
   },
