@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   buttonContainer: {
@@ -15,6 +16,6 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.darkGrey,
-    fontSize: 16,
+    fontSize: SIZES.XL,
   },
 });

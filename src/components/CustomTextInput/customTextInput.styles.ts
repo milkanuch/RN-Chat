@@ -1,24 +1,25 @@
 import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   error: {
     color: COLORS.red,
-    fontSize: 12,
+    fontSize: SIZES.M,
     fontWeight: 'bold',
-    marginTop: 4,
+    marginTop: SIZES.XXXS,
   },
   input: {
-    padding: 8,
-    paddingLeft: 14,
+    padding: SIZES.XS,
+    paddingLeft: SIZES.L,
   },
   inputContainer: {
     backgroundColor: COLORS.light.primary[200],
   },
   label: {
     color: COLORS.darkBlue,
-    fontSize: 14,
-    marginVertical: 5,
+    fontSize: SIZES.L,
+    marginVertical: SIZES.XXXS,
   },
 });
