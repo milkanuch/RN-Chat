@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   buttonContainer: {
@@ -12,12 +13,12 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.lightGrey,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
-    paddingBottom: 14,
+    padding: SIZES.XL,
+    paddingBottom: SIZES.L,
   },
   logo: {
     color: COLORS.darkBlue,
-    fontSize: 20,
+    fontSize: SIZES.XXXL,
     fontWeight: 'bold',
   },
 });

@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   tabBarLabelStyle: {
-    fontSize: 12,
+    fontSize: SIZES.M,
     fontWeight: 'bold',
   },
   tabBarStyle: {

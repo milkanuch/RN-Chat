@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
 import { SPACE_GROTESK_MEDIUM } from 'constants/fonts/fonts';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,7 +12,7 @@ export const styles = StyleSheet.create({
   title: {
     color: COLORS.darkBlue,
     fontSize: 24,
-    marginBottom: 8,
+    marginBottom: SIZES.XS,
     ...SPACE_GROTESK_MEDIUM,
   },
 });

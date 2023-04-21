@@ -5,6 +5,7 @@ import {
   SPACE_GROTESK_MEDIUM,
   SPACE_GROTESK_REGULAR,
 } from 'constants/fonts/fonts';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   avatar: {
@@ -19,16 +20,16 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingHorizontal: 28,
-    paddingVertical: 12,
+    paddingVertical: SIZES.M,
   },
   dateTime: {
     color: COLORS.lightGrey,
-    fontSize: 12,
+    fontSize: SIZES.M,
   },
   infoContainer: {
     flex: 1,
-    paddingLeft: 10,
-    paddingTop: 4,
+    paddingLeft: SIZES.S,
+    paddingTop: SIZES.XXXS,
   },
   message: {
     color: COLORS.lightGrey,
@@ -53,11 +54,11 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     color: COLORS.light.primary[200],
     flex: 1,
-    paddingHorizontal: 6,
+    paddingHorizontal: SIZES.XXS,
   },
   unreadMessagesContainer: {
     alignItems: 'flex-end',
-    fontSize: 12,
+    fontSize: SIZES.M,
     justifyContent: 'center',
   },
   username: {

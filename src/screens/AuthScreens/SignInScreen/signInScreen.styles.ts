@@ -2,14 +2,13 @@ import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
 import { SPACE_GROTESK_BOLD } from 'constants/fonts/fonts';
-
-const MARGIN = 14;
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   button: {
     borderColor: COLORS.darkBlue,
     borderWidth: 1,
-    bottom: MARGIN,
+    bottom: SIZES.L,
     left: 0,
     position: 'absolute',
     right: 0,
@@ -26,28 +25,28 @@ export const styles = StyleSheet.create({
   },
   countryCode: {
     backgroundColor: COLORS.light.primary[200],
-    padding: 12,
+    padding: SIZES.M,
   },
   disabledButtonLabel: {
     color: COLORS.red,
   },
   error: {
     color: COLORS.red,
-    fontSize: 12,
+    fontSize: SIZES.M,
     fontWeight: 'bold',
-    marginTop: 4,
+    marginTop: SIZES.XXXS,
   },
   input: {
     backgroundColor: COLORS.light.primary[200],
     height: 44,
-    paddingHorizontal: 4,
+    paddingHorizontal: SIZES.XXXS,
   },
   inputContainer: {
-    marginVertical: 10,
+    marginVertical: SIZES.S,
   },
   label: {
     color: COLORS.darkBlue,
-    fontSize: 14,
+    fontSize: SIZES.L,
   },
   phoneNumberContainer: {
     alignItems: 'center',
@@ -57,12 +56,12 @@ export const styles = StyleSheet.create({
   },
   phoneNumberInput: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: SIZES.S,
   },
   screen: {
     backgroundColor: COLORS.light.primary[400],
     flex: 1,
-    paddingHorizontal: MARGIN,
+    paddingHorizontal: SIZES.L,
   },
   titleContainer: {
     justifyContent: 'flex-end',

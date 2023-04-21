@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { COLORS } from 'constants/color';
 import { SPACE_GROTESK_REGULAR } from 'constants/fonts/fonts';
+import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   button: {
@@ -12,17 +13,17 @@ export const styles = StyleSheet.create({
   },
   icon: {
     backgroundColor: COLORS.transparent,
-    paddingHorizontal: 4,
+    paddingHorizontal: SIZES.XXXS,
   },
   large: {
-    padding: 15,
+    padding: SIZES.L,
   },
   small: {
-    padding: 10,
+    padding: SIZES.S,
   },
   text: {
     color: COLORS.light.primary[200],
-    fontSize: 16,
+    fontSize: SIZES.XL,
     ...SPACE_GROTESK_REGULAR,
   },
 });
