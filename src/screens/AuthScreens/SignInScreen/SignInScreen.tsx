@@ -36,10 +36,10 @@ import { styles } from './signInScreen.styles';
 import { SignInForm } from './signInScreen.types';
 import {
   AuthStackScreenTypes,
-  SignInScreenProp,
+  SignInScreenProps,
 } from 'navigation/AuthStackNavigation/authStackNavigation.types';
 
-export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
+export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   const [isUserRegistered, setIsUserRegistered] = useState<boolean>(true);
   const authorizationProgress = useSharedValue<number>(0);
 
@@ -95,10 +95,16 @@ export const SignInScreen: FC<SignInScreenProp> = ({ navigation }) => {
   }, [authorizationProgress.value]);
 
   const handleContinue = () => {
-    if (!isUserRegistered) {
-      navigation.navigate(AuthStackScreenTypes.SignUp);
+    const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
+    const password = getValues(PASSWORD_SETTINGS.name);
+    if (isUserRegistered && phoneNumber && password) {
+      navigation.navigate(AuthStackScreenTypes.SignUp, {
+        phoneNumber,
+        password,
+      });
       return;
     }
+    //TODO: add mobx user store
     setIsUserRegistered(true);
   };
 

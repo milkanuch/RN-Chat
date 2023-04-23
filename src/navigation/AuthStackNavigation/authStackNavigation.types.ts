@@ -1,5 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { SingUpScreenParams } from 'screens/AuthScreens/SignUpScreen/signUpScreen.types';
+
 export enum AuthStackScreenTypes {
   SignIn = 'SignIn',
   SignUp = 'SignUp',
@@ -7,15 +9,15 @@ export enum AuthStackScreenTypes {
 
 export type AuthStackScreenParamsList = {
   [AuthStackScreenTypes.SignIn]: undefined;
-  [AuthStackScreenTypes.SignUp]: undefined;
+  [AuthStackScreenTypes.SignUp]: SingUpScreenParams;
 };
 
-export type SignInScreenProp = StackScreenProps<
+export type SignInScreenProps = StackScreenProps<
   AuthStackScreenParamsList,
   AuthStackScreenTypes.SignIn
 >;
 
-export type SignUpScreenProp = StackScreenProps<
+export type SignUpScreenProps = StackScreenProps<
   AuthStackScreenParamsList,
   AuthStackScreenTypes.SignUp
 >;
