@@ -25,6 +25,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Kaizen to access your gallery, to let you share them with your friends.",
+          "cameraPermission": "Allow Kaizen to access your cameras, to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }
