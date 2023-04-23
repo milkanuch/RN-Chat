@@ -22,8 +22,8 @@ export const CustomTextInput: FC<CustomTextInputProps> = ({
           value={value}
           {...props}
         />
-        {!!error && <Text>{error}</Text>}
       </View>
+      {!!error && <Text style={styles.error}>{error}</Text>}
       {children}
     </View>
   );
