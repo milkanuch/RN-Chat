@@ -18,6 +18,7 @@ import { Title } from 'components/Title/Title';
 
 import { COLORS } from 'constants/color';
 
+import { TEST_ID } from './__test__/signInScreen.testIDs';
 import { signInScheme } from './signInScreen.schema';
 import { getAuthorizationProgress } from './signInScreen.utils';
 
@@ -109,12 +110,14 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <SafeAreaView style={styles.screen} testID={TEST_ID.CONTAINER}>
       <Title containerStyle={styles.titleContainer} title={TITLE} />
       <View style={styles.container}>
         <View>
           <Text style={styles.label}>{PHONE_NUMBER_SETTINGS.label}</Text>
-          <View style={[styles.inputContainer, styles.phoneNumberContainer]}>
+          <View
+            style={[styles.inputContainer, styles.phoneNumberContainer]}
+            testID={TEST_ID.PHONE_NUMBER_CONTROLLER}>
             <Text style={styles.countryCode}>
               {PHONE_NUMBER_SETTINGS.countryCode}
             </Text>
@@ -140,7 +143,9 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
           )}
         </View>
 
-        <View style={styles.inputContainer}>
+        <View
+          style={styles.inputContainer}
+          testID={TEST_ID.PASSWORD_CONTROLLER}>
           <Controller
             control={control}
             defaultValue={DEFAULT_VALUE}
@@ -160,7 +165,9 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
         </View>
 
         {!isUserRegistered && (
-          <View style={styles.inputContainer}>
+          <View
+            style={styles.inputContainer}
+            testID={TEST_ID.CONFIRM_PASSWORD_CONTROLLER}>
             <Controller
               control={control}
               defaultValue={DEFAULT_VALUE}
@@ -184,7 +191,8 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
           animatedStyle={buttonShakeStyle}
           disabled={isButtonDisabled}
           onPress={handleSubmit(handleContinue)}
-          style={styles.button}>
+          style={styles.button}
+          testID={TEST_ID.CONFIRM_BUTTON}>
           <Animated.View style={buttonShakeStyle}>
             <Animated.View style={buttonProgressStyle} />
             <Text
