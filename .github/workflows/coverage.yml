@@ -1,0 +1,27 @@
+name: Generate coverage badges
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run coverage on'
+        required: true
+        default: 'dev'
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn
+      - name: Run Tests
+        run: yarn test:coverage
+      - name: Generating coverage badges
+        uses: jpb06/jest-badges-action@latest
+        with:
+          branches: dev
+          commit-user: github-actions
+          commit-user-email: github-actions@users.noreply.github.com
+          commit-message: 'docs: update repository test coverage badges'
+          output-folder: assets/badges
+          coverage-summary-path: coverage/coverage-summary.json
