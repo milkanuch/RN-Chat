@@ -23,6 +23,14 @@ module.exports = function (api) {
       ['@babel/plugin-transform-flow-strip-types', { loose: false }],
       //SOURCE: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/
       'react-native-reanimated/plugin',
+      [
+        'module:react-native-dotenv',
+        {
+          envName: 'APP_ENV',
+          moduleName: 'dotenv',
+          path: '.env',
+        },
+      ],
     ],
     //SOURCE: https://babeljs.io/docs/assumptions
     assumptions: {
