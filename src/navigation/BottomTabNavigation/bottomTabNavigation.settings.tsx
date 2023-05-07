@@ -19,6 +19,7 @@ const tabBarIcon = (focused: boolean, iconName: string) => (
     size={ICON_SIZE}
   />
 );
+
 export const HOME_STACK_OPTIONS: BottomTabNavigationOptions = {
   headerShown: false,
   tabBarLabel: 'Chats',
