@@ -18,9 +18,16 @@ import { Title } from 'components/Title/Title';
 
 import { COLORS } from 'constants/color';
 
-import { TEST_ID } from './__test__/signInScreen.testIDs';
+import { checkIsUserRegistered, login } from 'services/auth/auth';
+import { setUserTokens } from 'services/storage/storage';
+import { user } from 'store/user/user';
+
 import { signInScheme } from './signInScreen.schema';
-import { getAuthorizationProgress } from './signInScreen.utils';
+import { TEST_ID } from './signInScreen.testIDs';
+import {
+  getAuthorizationProgress,
+  getFormattedPhoneNumber,
+} from './signInScreen.utils';
 
 import {
   FORM_MODE,
@@ -42,6 +49,7 @@ import {
 
 export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   const [isUserRegistered, setIsUserRegistered] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const authorizationProgress = useSharedValue<number>(0);
 
   const {
@@ -76,7 +84,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     return {
       width: `${authorizationProgress.value}%`,
       height: 50,
-      backgroundColor: COLORS.darkBlue,
+      backgroundColor: COLORS.lightGrey,
     };
   }, [authorizationProgress]);
 
@@ -95,18 +103,45 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     };
   }, [authorizationProgress.value]);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
     const password = getValues(PASSWORD_SETTINGS.name);
-    if (isUserRegistered && phoneNumber && password) {
-      navigation.navigate(AuthStackScreenTypes.SignUp, {
-        phoneNumber,
+
+    if (phoneNumber && password) {
+      const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
+
+      if (!isUserRegistered) {
+        navigation.navigate(AuthStackScreenTypes.SignUp, {
+          phoneNumber: formattedPhoneNumber,
+          password,
+        });
+        return;
+      }
+      const userTokens = await login({
+        phoneNumber: formattedPhoneNumber,
         password,
       });
-      return;
+
+      setIsLoading(true);
+      setUserTokens(userTokens);
+      user.setIsRegistered(true);
     }
-    //TODO: add mobx user store
-    setIsUserRegistered(true);
+  };
+
+  const handleCheckPhoneNumber = async () => {
+    const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
+
+    if (phoneNumber) {
+      const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
+
+      setIsLoading(true);
+      const isPhoneNumberRegistered = await checkIsUserRegistered(
+        formattedPhoneNumber,
+      );
+
+      setIsUserRegistered(isPhoneNumberRegistered);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -131,6 +166,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
                   mask={PHONE_NUMBER_SETTINGS.keyboardMask}
                   maxLength={PHONE_NUMBER_SETTINGS.maxLength}
                   onChangeText={handlePhoneNumber}
+                  onEndEditing={handleCheckPhoneNumber}
                   placeholder={PHONE_NUMBER_SETTINGS.placeholder}
                   style={[styles.input, styles.phoneNumberInput]}
                   value={value}
@@ -190,6 +226,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
         <AnimatedButton
           animatedStyle={buttonShakeStyle}
           disabled={isButtonDisabled}
+          isLoading={isLoading}
           onPress={handleSubmit(handleContinue)}
           style={styles.button}
           testID={TEST_ID.CONFIRM_BUTTON}>

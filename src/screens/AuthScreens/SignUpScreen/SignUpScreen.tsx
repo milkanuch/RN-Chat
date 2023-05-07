@@ -16,6 +16,12 @@ import { ButtonSize } from 'components/CustomButton/customButton.types';
 import { CustomTextInput } from 'components/CustomTextInput/CustomTextInput';
 import { Title } from 'components/Title/Title';
 
+import { register } from 'services/auth/auth';
+import { setUserTokens } from 'services/storage/storage';
+import { uploadAvatar } from 'services/user/user';
+import { avatarKeys } from 'services/user/user.types';
+import { user } from 'store/user/user';
+
 import { signUpScheme } from './signUpScreen.schema';
 
 import {
@@ -38,12 +44,15 @@ import { styles } from './signUpScreen.styles';
 import { SignUpForm } from './signUpScreen.types';
 import { SignUpScreenProps } from 'navigation/AuthStackNavigation/authStackNavigation.types';
 
-export const SignUpScreen: FC<SignUpScreenProps> = () => {
+export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
   const [image, setImage] = useState<string>('');
   const [isKeyboardOpened, setIsKeyboardOpened] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { phoneNumber, password } = route.params;
   const {
     control,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpForm>({
@@ -98,15 +107,35 @@ export const SignUpScreen: FC<SignUpScreenProps> = () => {
     }
   };
 
-  const handleSignUp = () => {
-    //TODO: add sign up logic
+  const handleSignUp = async () => {
+    const uploadAvatarParams = {
+      key: avatarKeys.avatar,
+      value: image,
+    };
+
+    await uploadAvatar(uploadAvatarParams);
+    const { nickname, biography } = getValues();
+    const userData = {
+      phoneNumber,
+      password,
+      nickname,
+      biography,
+    };
+
+    setIsLoading(true);
+    const registerData = await register(userData);
+
+    await setUserTokens(registerData);
+    setIsLoading(false);
+    user.setIsRegistered(true);
   };
 
   return (
     <SafeAreaView edges={SAFE_AREA_INSETS} style={styles.screen}>
       <ScrollView
         contentContainerStyle={styles.screenContainer}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        style={styles.screen}>
         <View style={styles.container}>
           <Title title={TITLE} />
           {!!image && (
@@ -180,6 +209,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = () => {
           <CustomButton
             buttonType={ButtonSize.large}
             disabled={isButtonDisabled}
+            isLoading={isLoading}
             onPress={handleSubmit(handleSignUp)}
             style={[
               styles.createButton,

@@ -6,7 +6,7 @@ import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   button: {
-    borderColor: COLORS.darkBlue,
+    borderColor: COLORS.lightGrey,
     borderWidth: 1,
     bottom: SIZES.L,
     left: 0,
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     right: 0,
   },
   buttonLabel: {
-    color: COLORS.green,
+    color: COLORS.darkBlue,
     textAlign: 'center',
     textAlignVertical: 'center',
     ...StyleSheet.absoluteFillObject,
@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     padding: SIZES.M,
   },
   disabledButtonLabel: {
-    color: COLORS.red,
+    color: COLORS.darkBlue,
   },
   error: {
     color: COLORS.red,

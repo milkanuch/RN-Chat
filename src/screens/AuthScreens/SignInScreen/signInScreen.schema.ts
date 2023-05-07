@@ -29,6 +29,6 @@ export const signInScheme = yup
       .required('Password is required'),
     [CONFIRM_PASSWORD_SETTINGS.name]: yup
       .string()
-      .oneOf([yup.ref(`${PASSWORD_SETTINGS.name}`)], "Passwords doesn't match"),
+      .required('Confirm password is required'),
   })
   .required();

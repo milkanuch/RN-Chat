@@ -4,8 +4,7 @@ import { render } from '@testing-library/react-native';
 import { STACK_MOCKED_NAVIGATION } from 'constants/mocks';
 
 import { SignInScreen } from '../SignInScreen';
-
-import { TEST_ID } from './signInScreen.testIDs';
+import { TEST_ID } from '../signInScreen.testIDs';
 
 import {
   AuthStackScreenParamsList,
@@ -31,6 +30,7 @@ describe('The Sign In screen', () => {
         route={MOCKED_ROUTE}
       />,
     );
+
     expect(getByTestId(TEST_ID.CONTAINER)).toBeDefined();
   });
 });
