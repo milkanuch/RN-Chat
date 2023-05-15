@@ -29,6 +29,10 @@ export const signInScheme = yup
       .required('Password is required'),
     [CONFIRM_PASSWORD_SETTINGS.name]: yup
       .string()
-      .oneOf([yup.ref(`${PASSWORD_SETTINGS.name}`)], "Passwords doesn't match"),
+      //NOTE: without null it will not work, i don't know why
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      .oneOf([yup.ref(PASSWORD_SETTINGS.name), null], 'Passwords must match')
+      .required('Password is required'),
   })
   .required();

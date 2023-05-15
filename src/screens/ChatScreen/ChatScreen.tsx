@@ -5,6 +5,7 @@ import { ChatScreenProp } from 'navigation/AppStackNavigation/appStackNavigation
 
 export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
   const { id } = route.params;
+
   return (
     <View>
       <Text>ChatScreen{id}</Text>

@@ -9,5 +9,6 @@ export type CustomButtonProps = TouchableOpacityProps & {
   title?: string;
   icon?: string;
   iconSize?: number;
+  isLoading?: boolean;
   buttonType?: ButtonSize;
 };

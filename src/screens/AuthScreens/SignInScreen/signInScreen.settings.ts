@@ -1,10 +1,11 @@
+import { ValidationMode } from 'react-hook-form';
 import { Easing } from 'react-native-reanimated';
 
 import { SignInInputsSettings } from './signInScreen.types';
 
 //NOTE: Hook form settings
 export const DEFAULT_VALUE = '';
-export const FORM_MODE = 'onChange';
+export const FORM_MODE: keyof ValidationMode = 'onChange';
 //NOTE: inputs settings
 export const PHONE_NUMBER_SETTINGS: SignInInputsSettings = {
   name: 'phoneNumber',

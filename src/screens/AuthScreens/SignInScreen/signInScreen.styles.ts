@@ -6,7 +6,7 @@ import { SIZES } from 'constants/sizes';
 
 export const styles = StyleSheet.create({
   button: {
-    borderColor: COLORS.darkBlue,
+    borderColor: COLORS.black,
     borderWidth: 1,
     bottom: SIZES.L,
     left: 0,
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     right: 0,
   },
   buttonLabel: {
-    color: COLORS.green,
+    color: COLORS.black,
     textAlign: 'center',
     textAlignVertical: 'center',
     ...StyleSheet.absoluteFillObject,
@@ -26,9 +26,6 @@ export const styles = StyleSheet.create({
   countryCode: {
     backgroundColor: COLORS.light.primary[200],
     padding: SIZES.M,
-  },
-  disabledButtonLabel: {
-    color: COLORS.red,
   },
   error: {
     color: COLORS.red,

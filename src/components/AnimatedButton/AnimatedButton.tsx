@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 
+import { styles } from './animatedButton.styles';
 import { AnimatedButtonProps } from './animatedButton.types';
 
 const AnimatedTouchableOpacity =
@@ -12,6 +13,7 @@ export const AnimatedButton: FC<AnimatedButtonProps> = ({
   onPress: handlePress,
   style,
   children,
+  isLoading,
   animatedStyle,
   ...props
 }) => {
@@ -20,7 +22,7 @@ export const AnimatedButton: FC<AnimatedButtonProps> = ({
       onPress={handlePress}
       style={[style, animatedStyle]}
       {...props}>
-      {children}
+      {isLoading ? <ActivityIndicator style={styles.loader} /> : children}
     </AnimatedTouchableOpacity>
   );
 };
