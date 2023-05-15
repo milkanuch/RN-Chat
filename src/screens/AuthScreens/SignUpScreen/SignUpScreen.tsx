@@ -18,8 +18,6 @@ import { Title } from 'components/Title/Title';
 
 import { register } from 'services/auth/auth';
 import { setUserTokens } from 'services/storage/storage';
-import { uploadAvatar } from 'services/user/user';
-import { avatarKeys } from 'services/user/user.types';
 import { user } from 'store/user/user';
 
 import { signUpScheme } from './signUpScreen.schema';
@@ -53,7 +51,6 @@ export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
   const {
     control,
     getValues,
-    handleSubmit,
     formState: { errors },
   } = useForm<SignUpForm>({
     resolver: yupResolver(signUpScheme),
@@ -108,12 +105,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
   };
 
   const handleSignUp = async () => {
-    const uploadAvatarParams = {
-      key: avatarKeys.avatar,
-      value: image,
-    };
-
-    await uploadAvatar(uploadAvatarParams);
+    setIsLoading(true);
     const { nickname, biography } = getValues();
     const userData = {
       phoneNumber,
@@ -122,7 +114,6 @@ export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
       biography,
     };
 
-    setIsLoading(true);
     const registerData = await register(userData);
 
     await setUserTokens(registerData);
@@ -210,7 +201,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
             buttonType={ButtonSize.large}
             disabled={isButtonDisabled}
             isLoading={isLoading}
-            onPress={handleSubmit(handleSignUp)}
+            onPress={handleSignUp}
             style={[
               styles.createButton,
               isButtonDisabled && styles.errorButton,

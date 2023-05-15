@@ -54,7 +54,6 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
 
   const {
     control,
-    handleSubmit,
     getValues,
     formState: { errors },
   } = useForm<SignInForm>({
@@ -107,6 +106,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
     const password = getValues(PASSWORD_SETTINGS.name);
 
+    setIsLoading(true);
     if (phoneNumber && password) {
       const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
 
@@ -117,15 +117,15 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
         });
         return;
       }
-      const userTokens = await login({
+      const userResponse = await login({
         phoneNumber: formattedPhoneNumber,
         password,
       });
 
-      setIsLoading(true);
-      setUserTokens(userTokens);
-      user.setIsRegistered(true);
+      await setUserTokens(userResponse);
+      user.setIsRegistered(userResponse.isRegistered);
     }
+    setIsLoading(false);
   };
 
   const handleCheckPhoneNumber = async () => {
@@ -186,11 +186,11 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
             control={control}
             defaultValue={DEFAULT_VALUE}
             name={PASSWORD_SETTINGS.name}
-            render={({ field: { onChange: handlePhoneNumber, value } }) => (
+            render={({ field: { onChange: handlePassword, value } }) => (
               <CustomTextInput
                 error={errors.password?.message}
                 label={PASSWORD_SETTINGS.label}
-                onChangeText={handlePhoneNumber}
+                onChangeText={handlePassword}
                 placeholder={PASSWORD_SETTINGS.placeholder}
                 secureTextEntry={true}
                 style={styles.input}
@@ -208,11 +208,13 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
               control={control}
               defaultValue={DEFAULT_VALUE}
               name={CONFIRM_PASSWORD_SETTINGS.name}
-              render={({ field: { onChange: handlePhoneNumber, value } }) => (
+              render={({
+                field: { onChange: handleConfirmPassword, value },
+              }) => (
                 <CustomTextInput
                   error={errors.confirmPassword?.message}
                   label={CONFIRM_PASSWORD_SETTINGS.label}
-                  onChangeText={handlePhoneNumber}
+                  onChangeText={handleConfirmPassword}
                   placeholder={CONFIRM_PASSWORD_SETTINGS.placeholder}
                   secureTextEntry={true}
                   style={styles.input}
@@ -225,9 +227,8 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
 
         <AnimatedButton
           animatedStyle={buttonShakeStyle}
-          disabled={isButtonDisabled}
           isLoading={isLoading}
-          onPress={handleSubmit(handleContinue)}
+          onPress={handleContinue}
           style={styles.button}
           testID={TEST_ID.CONFIRM_BUTTON}>
           <Animated.View style={buttonShakeStyle}>

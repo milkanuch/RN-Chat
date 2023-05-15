@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import {
   SafeAreaProvider,
   initialWindowMetrics,
@@ -11,7 +12,7 @@ import { AuthStackNavigation } from 'navigation/AuthStackNavigation/AuthStackNav
 
 import { APP_THEME } from './appNavigation.settings';
 
-export const AppNavigation = () => {
+export const AppNavigation = observer(() => {
   const isRegistered = user.getIsRegistered;
 
   return (
@@ -21,4 +22,4 @@ export const AppNavigation = () => {
       </NavigationContainer>
     </SafeAreaProvider>
   );
-};
+});

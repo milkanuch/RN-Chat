@@ -26,8 +26,8 @@ export const login = async (props: LoginRequestParams) => {
     });
 
     return data;
-  } catch {
-    throw new Error('Unable to register user');
+  } catch (error) {
+    throw new Error(`Unable to register user, ${error}`);
   }
 };
 
@@ -45,9 +45,8 @@ export const refresh = async (props: RefreshRequestParams) => {
 
 export const checkIsUserRegistered = async (phoneNumber: string) => {
   try {
-    const { data } = await instance.get<boolean>(`/auth/phone/${phoneNumber}`);
-
-    return data;
+    await instance.get<boolean>(`/auth/exists/${phoneNumber}`);
+    return true;
   } catch {
     return false;
   }
