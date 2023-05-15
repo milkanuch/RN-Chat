@@ -4,7 +4,7 @@ export enum avatarKeys {
 
 export interface UploadAvatarParams {
   key: avatarKeys;
-  value: string;
+  value: File;
 }
 
 export interface UploadAvatarResponseParams {

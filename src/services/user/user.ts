@@ -1,16 +1,39 @@
-import { instance } from 'services/index';
+/*
+NOTE: need to research how to upload images to server
+because we get an network error when trying to upload
 
-import { UploadAvatarParams, UploadAvatarResponseParams } from './user.types';
+import { tokenInstance } from 'services/index';
+import { getStorageItem } from 'services/storage/storage';
+import { storageKeys } from 'services/storage/storage.types';
 
-export const uploadAvatar = async (props: UploadAvatarParams) => {
+import { avatarKeys, UploadAvatarResponseParams } from './user.types';
+
+export const uploadAvatar = async (imageUri: string) => {
+  const instance = await tokenInstance();
+  const bearer = await getStorageItem(storageKeys.accessToken);
+
   try {
+    const formData = {
+      [avatarKeys.avatar]: new File([imageUri], 'avatar.png', {
+        type: 'image/png',
+        lastModified: Date.now(),
+      }),
+    };
+
     const { data } = await instance.post<UploadAvatarResponseParams>(
-      '/user/avatar',
-      { ...props },
+      'user/upload-avatar',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${bearer}`,
+        },
+      },
     );
 
     return data;
-  } catch (error) {
-    throw new Error(`Unable to upload avatar, ${error}`);
+  } catch (error: Error) {
+    throw new Error(`Unable to upload avatar, ${error.message}`);
   }
 };
+*/
