@@ -28,7 +28,6 @@ export const styles = StyleSheet.create({
   createButton: {
     alignItems: 'center',
     backgroundColor: COLORS.darkBlue,
-    borderWidth: 1,
     color: COLORS.green,
   },
   errorButton: {

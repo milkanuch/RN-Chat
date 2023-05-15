@@ -83,7 +83,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     return {
       width: `${authorizationProgress.value}%`,
       height: 50,
-      backgroundColor: COLORS.lightGrey,
+      backgroundColor: COLORS.white,
     };
   }, [authorizationProgress]);
 
@@ -227,19 +227,14 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
 
         <AnimatedButton
           animatedStyle={buttonShakeStyle}
+          disabled={isButtonDisabled}
           isLoading={isLoading}
           onPress={handleContinue}
           style={styles.button}
           testID={TEST_ID.CONFIRM_BUTTON}>
           <Animated.View style={buttonShakeStyle}>
             <Animated.View style={buttonProgressStyle} />
-            <Text
-              style={[
-                styles.buttonLabel,
-                isButtonDisabled && styles.disabledButtonLabel,
-              ]}>
-              {buttonTitle}
-            </Text>
+            <Text style={styles.buttonLabel}>{buttonTitle}</Text>
           </Animated.View>
         </AnimatedButton>
       </View>
