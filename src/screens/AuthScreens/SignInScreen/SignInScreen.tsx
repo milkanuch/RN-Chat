@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -39,6 +39,9 @@ import {
   SHAKE_ANIMATION_CONFIG,
   PROGRESS_ANIMATION_DURATION,
   TITLE,
+  BUTTON_HEIGHT,
+  CONTINUE_TITLE,
+  SIGN_UP_TITLE,
 } from './signInScreen.settings';
 import { styles } from './signInScreen.styles';
 import { SignInForm } from './signInScreen.types';
@@ -62,7 +65,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   });
 
   const values = getValues();
-  const buttonTitle = isUserRegistered ? 'SIGN UP' : 'CONTINUE';
+  const buttonTitle = isUserRegistered ? CONTINUE_TITLE : SIGN_UP_TITLE;
   const isButtonDisabled = !!Object.keys(errors).length;
 
   useEffect(() => {
@@ -81,7 +84,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   const buttonProgressStyle = useAnimatedStyle(() => {
     return {
       width: `${authorizationProgress.value}%`,
-      height: 50,
+      height: BUTTON_HEIGHT,
       backgroundColor: COLORS.white,
     };
   }, [authorizationProgress]);

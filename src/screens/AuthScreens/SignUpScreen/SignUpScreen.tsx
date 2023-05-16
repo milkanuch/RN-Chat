@@ -16,9 +16,14 @@ import { ButtonSize } from 'components/CustomButton/customButton.types';
 import { CustomTextInput } from 'components/CustomTextInput/CustomTextInput';
 import { Title } from 'components/Title/Title';
 
+import { SAFE_AREA_VIEW_EDGES } from 'constants/insets';
+
 import { register } from 'services/auth/auth';
 import { setUserTokens } from 'services/storage/storage';
+import { uploadAvatar } from 'services/user/user';
 import { user } from 'store/user/user';
+
+import { formatFilePathToBase64 } from '../../../helpers/convertImageToBase64';
 
 import { signUpScheme } from './signUpScreen.schema';
 
@@ -33,7 +38,6 @@ import {
   IMAGE_HEIGHT,
   IMAGE_WIDTH,
   NICKNAME,
-  SAFE_AREA_INSETS,
   SIGN_UP_FORM_MODE,
   SUBTITLE,
   TITLE,
@@ -105,28 +109,32 @@ export const SignUpScreen: FC<SignUpScreenProps> = ({ route }) => {
   };
 
   const handleSignUp = async () => {
-    setIsLoading(true);
     const { nickname, biography } = getValues();
-    const userData = {
-      phoneNumber,
-      password,
-      nickname,
-      biography,
-    };
 
-    const registerData = await register(userData);
+    if (!!nickname && !!biography) {
+      const userData = {
+        phoneNumber,
+        password,
+        nickname,
+        biography,
+      };
 
-    await setUserTokens(registerData);
-    setIsLoading(false);
-    user.setIsRegistered(true);
+      setIsLoading(true);
+      const base64 = await formatFilePathToBase64(image);
+      const registerData = await register(userData);
+
+      await setUserTokens(registerData);
+      await uploadAvatar(base64);
+      user.setIsRegistered(true);
+      setIsLoading(false);
+    }
   };
 
   return (
-    <SafeAreaView edges={SAFE_AREA_INSETS} style={styles.screen}>
+    <SafeAreaView edges={SAFE_AREA_VIEW_EDGES} style={styles.screen}>
       <ScrollView
         contentContainerStyle={styles.screenContainer}
-        showsVerticalScrollIndicator={false}
-        style={styles.screen}>
+        showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Title title={TITLE} />
           {!!image && (
