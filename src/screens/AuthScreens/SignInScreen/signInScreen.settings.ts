@@ -48,7 +48,9 @@ export const SHAKE_ANIMATION = {
   right: 0,
 };
 export const SHAKE_ANIMATION_CONFIG = { duration: 100, easing: Easing.linear };
-
 export const PROGRESS_ANIMATION_DURATION = { duration: 500 };
+export const BUTTON_HEIGHT = 50;
 //NOTE: title
 export const TITLE = 'Authorization';
+export const CONTINUE_TITLE = 'CONTINUE';
+export const SIGN_UP_TITLE = 'SIGN UP';

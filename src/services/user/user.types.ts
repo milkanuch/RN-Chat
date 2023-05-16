@@ -1,12 +1,3 @@
-export enum avatarKeys {
-  avatar = 'avatar',
-}
-
-export interface UploadAvatarParams {
-  key: avatarKeys;
-  value: File;
-}
-
 export interface UploadAvatarResponseParams {
   message: string;
 }
@@ -31,6 +22,11 @@ export interface Message {
 export interface MessageResponseParams {
   messages: Message[];
 }
+export interface MessagesRequestParams {
+  chatId: string;
+  time?: Date | number;
+}
+
 export interface DuoChatWithUsers {
   id: string;
   name: string;
@@ -38,4 +34,16 @@ export interface DuoChatWithUsers {
   groupChatOptions?: string;
   users: User[];
   groupChat: boolean;
+}
+export interface GroupChatParams {
+  name: string;
+  password: string;
+  privacyMode: boolean;
+}
+
+export interface GroupChatResponseParams {
+  id: number;
+  name: string;
+  membersCount: number;
+  membersLimit: number;
 }

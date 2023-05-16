@@ -34,21 +34,20 @@ import {
   SEND_BUTTON_ICON_SIZE,
   SHOW_AVATAR_FOR_EVERY_MESSAGE,
 } from 'screens/ChatScreen/chatScreen.settings';
-import { SAFE_AREA_VIEW_EDGES } from 'screens/HomeScreen/homeScreen.settings';
 
 import { COLORS } from 'constants/color';
+import { SAFE_AREA_VIEW_EDGES } from 'constants/insets';
 
 import { OPEN_SOCKET_URI } from 'services/sockets/sockets';
 import { RECONNECT_TIMEOUT } from 'services/sockets/sockets.settings';
 import { getStorageItem } from 'services/storage/storage';
 import { storageKeys } from 'services/storage/storage.types';
+import { getChatById, getMessages, getUserId } from 'services/user/user';
 import {
-  getChatById,
-  getMessages,
-  getUserId,
+  DuoChatWithUsers,
   MessagesRequestParams,
-} from 'services/user/user';
-import { DuoChatWithUsers, User } from 'services/user/user.types';
+  User,
+} from 'services/user/user.types';
 
 import {
   bubbleStyles,
@@ -239,7 +238,7 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
   };
 
   return (
-    <SafeAreaView edges={[SAFE_AREA_VIEW_EDGES]} style={styles.container}>
+    <SafeAreaView edges={SAFE_AREA_VIEW_EDGES} style={styles.container}>
       <ChatScreenHeader chat={chat} user={recipient} />
       <GiftedChat
         listViewProps={{

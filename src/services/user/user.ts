@@ -1,51 +1,37 @@
-/*
-NOTE: need to research how to upload images to server
-because we get an network error when trying to upload
-
-import { tokenInstance } from 'services/index';
-import { getStorageItem } from 'services/storage/storage';
-import { storageKeys } from 'services/storage/storage.types';
-
-import { avatarKeys, UploadAvatarResponseParams } from './user.types';
-
-export const uploadAvatar = async (imageUri: string) => {
-  const instance = await tokenInstance();
-  const bearer = await getStorageItem(storageKeys.accessToken);
-
-  try {
-    const formData = {
-      [avatarKeys.avatar]: new File([imageUri], 'avatar.png', {
-        type: 'image/png',
-        lastModified: Date.now(),
-      }),
-    };
-
-    const { data } = await instance.post<UploadAvatarResponseParams>(
-      'user/upload-avatar',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${bearer}`,
-        },
-      },
-    );
-
-    return data;
-  } catch (error: Error) {
-    throw new Error(`Unable to upload avatar, ${error.message}`);
-  }
-};
-*/
-
 import { ChatItemProps } from 'components/ChatItem/chatItem.types';
 
 import { getInstanceBearer } from 'services/index';
 import {
   DuoChatWithUsers,
   MessageResponseParams,
+  MessagesRequestParams,
   User,
 } from 'services/user/user.types';
+
+import {
+  GroupChatParams,
+  GroupChatResponseParams,
+  UploadAvatarResponseParams,
+} from './user.types';
+
+export const uploadAvatar = async (imageUri: string) => {
+  const instanceWithBearer = await getInstanceBearer();
+
+  try {
+    const requestBody = {
+      encodedContent: imageUri,
+    };
+
+    const { data } = await instanceWithBearer.post<UploadAvatarResponseParams>(
+      'user/upload-avatar',
+      requestBody,
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(`Unable to upload avatar, ${error}`);
+  }
+};
 
 export const findUserByPhone = async (phoneNumber: string) => {
   try {
@@ -97,11 +83,6 @@ export const getUserId = async () => {
   }
 };
 
-export interface MessagesRequestParams {
-  chatId: string;
-  time?: Date | number;
-}
-
 export const getMessages = async (props: MessagesRequestParams) => {
   try {
     const instanceBearer = await getInstanceBearer();
@@ -130,6 +111,7 @@ export const getChatWithSpecificUser = async (userId: string) => {
     throw new Error(`Unable to get chat with specific user ${error}`);
   }
 };
+
 export const startDuoChat = async (userId: string) => {
   try {
     const instanceBearer = await getInstanceBearer();
@@ -140,5 +122,50 @@ export const startDuoChat = async (userId: string) => {
     return data;
   } catch (error) {
     throw new Error(`Unable to start duo chat ${error}`);
+  }
+};
+
+export const startGroupChat = async (groupOptions: GroupChatParams) => {
+  try {
+    const instanceBearer = await getInstanceBearer();
+    const { data } = await instanceBearer.post<GroupChatResponseParams>(
+      '/user/group-chats/new',
+      groupOptions,
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(`Unable to start group chat ${error}`);
+  }
+};
+
+export const setGroupChatAvatar = async (chatId: number, imageUri: string) => {
+  try {
+    const instanceBearer = await getInstanceBearer();
+    const requestBody = {
+      encodedContent: imageUri,
+    };
+
+    const { data } = await instanceBearer.post<UploadAvatarResponseParams>(
+      `/user/group-chats/${chatId}/upload-avatar`,
+      requestBody,
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(`Unable to set group chat avatar ${error}`);
+  }
+};
+
+export const getAllGroupChats = async () => {
+  try {
+    const instanceBearer = await getInstanceBearer();
+    const { data } = await instanceBearer.get<ChatItemProps[]>(
+      '/user/group-chats/all',
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(`Unable to get all group chats ${error}`);
   }
 };

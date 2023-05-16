@@ -24,6 +24,7 @@
     "@types/stompjs": "^2.3.5",
     "axios": "^1.4.0",
     "expo": "~48.0.5",
+    "expo-file-system": "~15.2.2",
     "expo-image": "~1.0.0",
     "expo-image-picker": "~14.1.1",
     "expo-secure-store": "~12.1.1",

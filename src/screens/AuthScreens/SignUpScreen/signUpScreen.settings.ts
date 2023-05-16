@@ -1,6 +1,5 @@
 import { ImagePickerOptions, MediaTypeOptions } from 'expo-image-picker';
 import { Easing } from 'react-native-reanimated';
-import { Edge } from 'react-native-safe-area-context';
 
 import { SignUpInputsSettings } from './signUpScreen.types';
 
@@ -10,8 +9,6 @@ const ASPECT_RATIO = {
 };
 
 export const SIGN_UP_FORM_MODE = 'onChange';
-
-export const SAFE_AREA_INSETS: readonly Edge[] = ['top'];
 
 export const CAMERA_ICON = 'camera';
 export const GALLERY_ICON = 'image';

@@ -16,13 +16,14 @@ import {
   EMPTY_CONTENT_TITLE,
   HIDE_BUTTON_COLOR,
   MODAL_HIDE_BUTTON_SIZE,
-  SAFE_AREA_VIEW_EDGES,
   MODAL_HIDE_BUTTON_ICON,
   MODAL_SEARCH_BUTTON_ICON,
   MODAL_SEARCH_BUTTON_SIZE,
   IS_MODAL_TRANSPARENT,
 } from 'screens/HomeScreen/homeScreen.settings';
 import { styles } from 'screens/HomeScreen/homeScreen.styles';
+
+import { SAFE_AREA_VIEW_EDGES } from 'constants/insets';
 
 import {
   findUserByPhone,
@@ -106,7 +107,7 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
   const handleChangePhoneNumber = (text: string) => setPhoneNumber(text);
 
   return (
-    <SafeAreaView edges={[SAFE_AREA_VIEW_EDGES]} style={styles.container}>
+    <SafeAreaView edges={SAFE_AREA_VIEW_EDGES} style={styles.container}>
       <HomeScreenHeader onPressSearch={handleOpenModal} />
       <Modal
         onRequestClose={handleOpenModal}
