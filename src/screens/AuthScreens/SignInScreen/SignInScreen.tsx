@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import MaskInput from 'react-native-mask-input';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -14,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnimatedButton } from 'components/AnimatedButton/AnimatedButton';
 import { CustomTextInput } from 'components/CustomTextInput/CustomTextInput';
+import { PhoneNumberInput } from 'components/PhoneNumberInput/PhoneNumberInput';
 import { Title } from 'components/Title/Title';
 
 import { COLORS } from 'constants/color';
@@ -146,40 +146,20 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     <SafeAreaView style={styles.screen} testID={TEST_ID.CONTAINER}>
       <Title containerStyle={styles.titleContainer} title={TITLE} />
       <View style={styles.container}>
-        <View>
-          <Text style={styles.label}>{PHONE_NUMBER_SETTINGS.label}</Text>
-          <View
-            style={[styles.inputContainer, styles.phoneNumberContainer]}
-            testID={TEST_ID.PHONE_NUMBER_CONTROLLER}>
-            <Text style={styles.countryCode}>
-              {PHONE_NUMBER_SETTINGS.countryCode}
-            </Text>
-            <Controller
-              control={control}
-              defaultValue={DEFAULT_VALUE}
-              name={PHONE_NUMBER_SETTINGS.name}
-              render={({ field: { onChange: handlePhoneNumber, value } }) => (
-                <MaskInput
-                  keyboardType={PHONE_NUMBER_SETTINGS.keyboardType}
-                  mask={PHONE_NUMBER_SETTINGS.keyboardMask}
-                  maxLength={PHONE_NUMBER_SETTINGS.maxLength}
-                  onChangeText={handlePhoneNumber}
-                  onEndEditing={handleCheckPhoneNumber}
-                  placeholder={PHONE_NUMBER_SETTINGS.placeholder}
-                  style={[styles.input, styles.phoneNumberInput]}
-                  value={value}
-                />
-              )}
+        <Controller
+          control={control}
+          defaultValue={DEFAULT_VALUE}
+          name={PHONE_NUMBER_SETTINGS.name}
+          render={({ field: { onChange: handlePhoneNumber, value } }) => (
+            <PhoneNumberInput
+              error={errors.phoneNumber?.message}
+              onChangeText={handlePhoneNumber}
+              onEndEditing={handleCheckPhoneNumber}
+              value={value}
             />
-          </View>
-          {!!errors.phoneNumber && (
-            <Text style={styles.error}>{errors.phoneNumber.message}</Text>
           )}
-        </View>
-
-        <View
-          style={styles.inputContainer}
-          testID={TEST_ID.PASSWORD_CONTROLLER}>
+        />
+        <View style={styles.inputContainer}>
           <Controller
             control={control}
             defaultValue={DEFAULT_VALUE}

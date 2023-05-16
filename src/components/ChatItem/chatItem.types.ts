@@ -1,8 +1,12 @@
-export interface ChatItemProps {
+import { TouchableOpacityProps } from 'react-native';
+
+export interface ChatItemProps extends TouchableOpacityProps {
   id: string;
+  userId: string;
   username: string;
-  lastMessage: string;
-  lastMessageTime: string;
+  groupChat?: boolean;
+  lastMessage?: string;
+  lastMessageTime?: string;
   avatar: string;
   isOnline?: boolean;
   isTyping?: boolean;

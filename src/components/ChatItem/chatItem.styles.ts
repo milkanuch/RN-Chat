@@ -19,21 +19,22 @@ export const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    paddingHorizontal: 28,
+    paddingHorizontal: SIZES.XXXXL,
     paddingVertical: SIZES.M,
   },
   dateTime: {
     color: COLORS.lightGrey,
     fontSize: SIZES.M,
   },
-  infoContainer: {
+  flex: {
     flex: 1,
-    paddingLeft: SIZES.S,
-    paddingTop: SIZES.XXXS,
+  },
+  infoContainer: {
+    justifyContent: 'space-around',
+    paddingLeft: SIZES.XS,
   },
   message: {
     color: COLORS.lightGrey,
-    flex: 1,
   },
   messageContainer: {
     flexDirection: 'row',
@@ -53,7 +54,6 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.blue,
     borderRadius: 100,
     color: COLORS.light.primary[200],
-    flex: 1,
     paddingHorizontal: SIZES.XXS,
   },
   unreadMessagesContainer: {
