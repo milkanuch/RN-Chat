@@ -1,61 +1,146 @@
-import { useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
+import { Modal, View } from 'react-native';
 
-import { FlashList } from '@shopify/flash-list';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ChatItem } from 'components/ChatItem/ChatItem';
 import { ChatItemProps } from 'components/ChatItem/chatItem.types';
-import { EmptyContent } from 'components/EmptyContent/EmptyContent';
+import { ChatList } from 'components/ChatList/ChatList';
+import { CustomButton } from 'components/CustomButton/CustomButton';
+import { HomeScreenHeader } from 'components/HomeScreenHeader/HomeScreenHeader';
+import { PhoneNumberInput } from 'components/PhoneNumberInput/PhoneNumberInput';
 
-import { HomeScreenHeader } from 'screens/HomeScreen/HomeScreenHeader/HomeScreenHeader';
 import {
-  EMPTY_SCREEN_BUTTON_TITLE,
-  EMPTY_SCREEN_DESCRIPTION,
-  EMPTY_SCREEN_ICON,
-  EMPTY_SCREEN_ICON_SIZE,
-  EMPTY_SCREEN_TITLE,
-  ESTIMATED_ITEM_SIZE,
-  HOME_SCREEN_HEADER_TITLE,
+  EMPTY_CONTENT_DESCRIPTION,
+  EMPTY_CONTENT_MAIN_BUTTON,
+  EMPTY_CONTENT_TITLE,
+  HIDE_BUTTON_COLOR,
+  MODAL_HIDE_BUTTON_SIZE,
   SAFE_AREA_VIEW_EDGES,
+  MODAL_HIDE_BUTTON_ICON,
+  MODAL_SEARCH_BUTTON_ICON,
+  MODAL_SEARCH_BUTTON_SIZE,
+  IS_MODAL_TRANSPARENT,
 } from 'screens/HomeScreen/homeScreen.settings';
 import { styles } from 'screens/HomeScreen/homeScreen.styles';
 
-export const HomeScreen = () => {
+import {
+  findUserByPhone,
+  getAllDuoChats,
+  getChatWithSpecificUser,
+  startDuoChat,
+} from 'services/user/user';
+import { DuoChatWithUsers, User } from 'services/user/user.types';
+
+import { getFormattedPhoneNumber } from '../../utils/utils';
+
+import { AppStackTypes } from 'navigation/AppStackNavigation/appStackNavigation.types';
+import { HomeScreenProps } from 'navigation/HomeStackNavigation/homeStackNavigation.types';
+
+export const HomeScreen: FC<HomeScreenProps> = () => {
   const [chats, setChats] = useState<ChatItemProps[]>([]);
-  const handleEmptyContent = () => {
-    setChats([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isUserFound, setIsUserFound] = useState(true);
+
+  const fetchData = useCallback(async () => {
+    const fetchDuoChats = await getAllDuoChats();
+
+    fetchDuoChats.map(async chat => {
+      chat.avatar = 'https://i.ibb.co/JmcPzQm/user-default-av.png';
+      const lastMessageTime = new Date(chat.lastMessageTime as string);
+
+      chat.lastMessageTime = lastMessageTime.toLocaleDateString();
+    });
+    setChats(fetchDuoChats);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [fetchData]),
+  );
+
+  const handleSearchUser = () => {
+    setModalVisible(true);
   };
-  const handlePressSetting = () => {
-    //TODO: implement
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
   };
-  const handlePressSearch = () => {
-    //TODO: implement
+
+  const handleSearchUserByPhone = async () => {
+    const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
+    let isUserFound = true;
+    let user = {} as User;
+
+    try {
+      user = await findUserByPhone(formattedPhoneNumber);
+    } catch (error) {
+      isUserFound = false;
+    }
+
+    setIsUserFound(isUserFound);
+
+    if (isUserFound) {
+      let chat: DuoChatWithUsers;
+
+      try {
+        chat = await getChatWithSpecificUser(user.id);
+      } catch (error) {
+        const newChat = await startDuoChat(user.id);
+
+        chat = { id: newChat.chatId } as DuoChatWithUsers;
+      }
+      handleOpenChat(chat.id);
+      setModalVisible(!modalVisible);
+    }
   };
+
+  const handleCloseModal = () => setModalVisible(!modalVisible);
+
+  const { navigate } = useNavigation();
+  const handleOpenChat = (id: string) =>
+    navigate(AppStackTypes.ChatScreen, { id });
+
+  const handleChangePhoneNumber = (text: string) => setPhoneNumber(text);
 
   return (
     <SafeAreaView edges={[SAFE_AREA_VIEW_EDGES]} style={styles.container}>
-      <HomeScreenHeader
-        onPressSearch={handlePressSearch}
-        onPressSetting={handlePressSetting}
-        title={HOME_SCREEN_HEADER_TITLE}
+      <HomeScreenHeader onPressSearch={handleOpenModal} />
+      <Modal
+        onRequestClose={handleOpenModal}
+        transparent={IS_MODAL_TRANSPARENT}
+        visible={modalVisible}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <CustomButton
+              icon={MODAL_HIDE_BUTTON_ICON}
+              iconSize={MODAL_HIDE_BUTTON_SIZE}
+              onPress={handleCloseModal}
+              style={styles.hideButton}
+            />
+
+            <PhoneNumberInput
+              error={!isUserFound ? HIDE_BUTTON_COLOR : undefined}
+              onChangeText={handleChangePhoneNumber}
+              value={phoneNumber}
+            />
+            <CustomButton
+              icon={MODAL_SEARCH_BUTTON_ICON}
+              iconSize={MODAL_SEARCH_BUTTON_SIZE}
+              onPress={handleSearchUserByPhone}
+            />
+          </View>
+        </View>
+      </Modal>
+      <ChatList
+        chats={chats}
+        emptyContentButtonTitle={EMPTY_CONTENT_MAIN_BUTTON}
+        emptyContentDescription={EMPTY_CONTENT_DESCRIPTION}
+        emptyContentTitle={EMPTY_CONTENT_TITLE}
+        onPressEmptyContent={handleSearchUser}
       />
-      {chats.length ? (
-        <FlashList
-          data={chats}
-          estimatedItemSize={ESTIMATED_ITEM_SIZE}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <ChatItem {...item} />}
-        />
-      ) : (
-        <EmptyContent
-          buttonTitle={EMPTY_SCREEN_BUTTON_TITLE}
-          description={EMPTY_SCREEN_DESCRIPTION}
-          icon={EMPTY_SCREEN_ICON}
-          iconSize={EMPTY_SCREEN_ICON_SIZE}
-          onPress={handleEmptyContent}
-          title={EMPTY_SCREEN_TITLE}
-        />
-      )}
     </SafeAreaView>
   );
 };

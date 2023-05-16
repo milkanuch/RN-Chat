@@ -1,4 +1,4 @@
-import { StackNavigationOptions } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 
 export enum HomeStackScreenTypes {
   Home = 'Home',
@@ -8,6 +8,7 @@ export type HomeStackParamsList = {
   [HomeStackScreenTypes.Home]: undefined;
 };
 
-export const HOME_SCREEN_OPTIONS: StackNavigationOptions = {
-  headerShadowVisible: false,
-};
+export type HomeScreenProps = StackScreenProps<
+  HomeStackParamsList,
+  HomeStackScreenTypes.Home
+>;
