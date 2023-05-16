@@ -1,5 +1,9 @@
 import { refresh } from 'services/auth/auth';
-import { getStorageItem, setUserTokens } from 'services/storage/storage';
+import {
+  deleteUserTokens,
+  getStorageItem,
+  setUserTokens,
+} from 'services/storage/storage';
 import { storageKeys } from 'services/storage/storage.types';
 
 export const checkUserTokenStatus = async (): Promise<boolean> => {
@@ -14,6 +18,7 @@ export const checkUserTokenStatus = async (): Promise<boolean> => {
   if (isExpired) {
     const newTokens = await refresh({ oldRefreshToken: refreshToken });
 
+    await deleteUserTokens();
     await setUserTokens(newTokens);
     return true;
   }
