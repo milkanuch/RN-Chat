@@ -4,11 +4,13 @@ import { ChatScreenParams } from 'screens/ChatScreen/chatScreen.types';
 
 export enum AppStackTypes {
   ChatScreen = 'ChatScreen',
+  CreateGroupScreen = 'CreateGroupScreen',
   AppBottomTabNavigation = 'AppBottomTabNavigation',
 }
 
 export type AppStackParamsList = {
   [AppStackTypes.ChatScreen]: ChatScreenParams;
+  [AppStackTypes.CreateGroupScreen]: undefined;
   [AppStackTypes.AppBottomTabNavigation]: undefined;
 };
 
@@ -17,6 +19,10 @@ export type ChatScreenProp = StackScreenProps<
   AppStackTypes.ChatScreen
 >;
 
+export type CreateGroupScreenProp = StackScreenProps<
+  AppStackParamsList,
+  AppStackTypes.CreateGroupScreen
+>;
 //NOTE: This eslint rules is unnecessary here
 //SOURCE: https://reactnavigation.org/docs/typescript/#organizing-types
 declare global {
