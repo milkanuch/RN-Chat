@@ -8,8 +8,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   container: {
-    backgroundColor: COLORS.light.primary[400],
-    borderBottomWidth: 0.8,
+    borderBottomWidth: 0.4,
     borderColor: COLORS.lightGrey,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -21,4 +20,5 @@ export const styles = StyleSheet.create({
     fontSize: SIZES.XXXL,
     fontWeight: 'bold',
   },
+  username: {},
 });
