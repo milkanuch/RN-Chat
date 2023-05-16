@@ -10,6 +10,7 @@ const ICON_SIZE = 22;
 
 const ICON_NAME = {
   home: 'message',
+  group: 'group',
 };
 
 const tabBarIcon = (focused: boolean, iconName: string) => (
@@ -26,4 +27,12 @@ export const HOME_STACK_OPTIONS: BottomTabNavigationOptions = {
   tabBarStyle: styles.tabBarStyle,
   tabBarLabelStyle: styles.tabBarLabelStyle,
   tabBarIcon: ({ focused }) => tabBarIcon(focused, ICON_NAME.home),
+};
+
+export const GROUP_STACK_OPTIONS: BottomTabNavigationOptions = {
+  headerShown: false,
+  tabBarLabel: 'Groups',
+  tabBarStyle: styles.tabBarStyle,
+  tabBarLabelStyle: styles.tabBarLabelStyle,
+  tabBarIcon: ({ focused }) => tabBarIcon(focused, ICON_NAME.group),
 };
