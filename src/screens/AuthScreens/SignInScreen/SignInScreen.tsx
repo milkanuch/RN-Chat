@@ -61,12 +61,11 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
     mode: FORM_MODE,
   });
 
+  const values = getValues();
   const buttonTitle = isUserRegistered ? 'SIGN UP' : 'CONTINUE';
   const isButtonDisabled = !!Object.keys(errors).length;
 
   useEffect(() => {
-    const values = getValues();
-
     authorizationProgress.value = withTiming(
       getAuthorizationProgress(errors, values, isUserRegistered),
       PROGRESS_ANIMATION_DURATION,
@@ -103,33 +102,32 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   }, [authorizationProgress.value]);
 
   const handleContinue = async () => {
-    const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
-    const password = getValues(PASSWORD_SETTINGS.name);
+    const { phoneNumber, password, confirmPassword } = values;
 
     setIsLoading(true);
     if (phoneNumber && password) {
       const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
 
-      if (!isUserRegistered) {
+      if (!isUserRegistered && !!confirmPassword) {
         navigation.navigate(AuthStackScreenTypes.SignUp, {
           phoneNumber: formattedPhoneNumber,
           password,
         });
-        return;
-      }
-      const userResponse = await login({
-        phoneNumber: formattedPhoneNumber,
-        password,
-      });
+      } else if (isUserRegistered) {
+        const userResponse = await login({
+          phoneNumber: formattedPhoneNumber,
+          password,
+        });
 
-      await setUserTokens(userResponse);
-      user.setIsRegistered(userResponse.isRegistered);
+        await setUserTokens(userResponse);
+        user.setIsRegistered(userResponse.isRegistered);
+      }
     }
     setIsLoading(false);
   };
 
   const handleCheckPhoneNumber = async () => {
-    const phoneNumber = getValues(PHONE_NUMBER_SETTINGS.name);
+    const { phoneNumber } = values;
 
     if (phoneNumber) {
       const formattedPhoneNumber = getFormattedPhoneNumber(phoneNumber);
