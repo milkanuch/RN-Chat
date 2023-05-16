@@ -31,15 +31,16 @@ export const login = async (props: LoginRequestParams) => {
   }
 };
 
-export const refresh = async (props: RefreshRequestParams) => {
+export const refresh = async (oldRefreshToken: RefreshRequestParams) => {
   try {
-    const { data } = await instance.post<TokensParams>('/auth/refresh', {
-      ...props,
-    });
+    const { data } = await instance.post<TokensParams>(
+      '/auth/refresh',
+      oldRefreshToken,
+    );
 
     return data;
-  } catch {
-    throw new Error('Unable to register user');
+  } catch (error) {
+    throw new Error(`Unable to register user, ${error}`);
   }
 };
 
