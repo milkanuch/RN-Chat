@@ -7,4 +7,6 @@ export interface EmptyContentProps {
   buttonTitle: string;
   iconSize?: number;
   onPress: TouchableOpacityProps['onPress'];
+  onPressAdditional?: TouchableOpacityProps['onPress'];
+  additionalButtonTitle?: string;
 }
