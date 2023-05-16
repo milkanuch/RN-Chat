@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: SIZES.L,
   },
   screenContainer: {
-    flex: 1,
+    flexGrow: 1,
   },
   subtitle: {
     padding: SIZES.XXXXL,
