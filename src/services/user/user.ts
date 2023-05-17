@@ -3,6 +3,7 @@ import { ChatItemProps } from 'components/ChatItem/chatItem.types';
 import { getInstanceBearer } from 'services/index';
 import {
   DuoChatWithUsers,
+  FindUserParams,
   MessageResponseParams,
   MessagesRequestParams,
   User,
@@ -75,9 +76,9 @@ export const getChatById = async (chatId: string) => {
 export const getUserId = async () => {
   try {
     const instanceBearer = await getInstanceBearer();
-    const { data } = await instanceBearer.get<string>(`/user`);
+    const { data } = await instanceBearer.get<FindUserParams>(`/user`);
 
-    return data;
+    return data.id;
   } catch (error) {
     throw new Error(`Unable to get user id ${error}`);
   }
