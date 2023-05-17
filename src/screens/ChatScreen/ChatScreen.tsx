@@ -66,18 +66,19 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
   const [messages, setMessages] = useState([] as IMessage[]);
   let stompClient: CompatClient;
 
-  const fetchData = useCallback(() => {
-    Promise.all([
+  const fetchData = useCallback(async () => {
+    const [fetchChat, userId, data] = await Promise.all([
       getChatById(id),
       getUserId(),
       getMessages({ chatId: id }),
-      connectToSocket(),
-    ]).then(([fetchChat, userId, data]) => {
+    ]);
+
+    if (fetchChat && userId && data) {
       setChat(fetchChat);
       fetchChat.users.map(user => {
         user.avatar = 'https://i.ibb.co/JmcPzQm/user-default-av.png';
       });
-
+      await connectToSocket(userId);
       const [fetchUser, fetchRecipient] =
         fetchChat.users[0].id === userId
           ? fetchChat.users
@@ -100,8 +101,7 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
         });
       });
       setMessages(loadMessages);
-    });
-
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -110,7 +110,7 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData]);
 
-  const connectToSocket = async () => {
+  const connectToSocket = async (userId: string) => {
     const socket: IStompSocket = new SockJS(OPEN_SOCKET_URI) as IStompSocket;
     const token = await getStorageItem(storageKeys.accessToken);
     const bearer = {
@@ -122,7 +122,7 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
 
     stompClient.connect(
       bearer,
-      () => handleConnected(bearer),
+      () => handleConnected(bearer, userId),
       () => stompFailureCallback(),
     );
   };
@@ -157,14 +157,17 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
     });
   };
 
-  const handleConnected = (bearer: { Authorization: string }) => {
+  const handleConnected = (
+    bearer: { Authorization: string },
+    userId: string,
+  ) => {
     stompClient.subscribe(
       `/duo-chat/${id}`,
       handlePublicMessageReceived,
       bearer,
     );
     stompClient.subscribe(
-      `/user/${user.id}/messages`,
+      `/user/${userId}/messages`,
       handlePublicMessageReceived,
       bearer,
     );
