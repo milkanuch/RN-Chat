@@ -41,6 +41,10 @@ export interface GroupChatParams {
   privacyMode: boolean;
 }
 
+export interface FindUserParams {
+  id: string;
+}
+
 export interface GroupChatResponseParams {
   id: number;
   name: string;
