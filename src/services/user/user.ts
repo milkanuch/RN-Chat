@@ -5,6 +5,7 @@ import {
   DuoChatWithUsers,
   MessageResponseParams,
   MessagesRequestParams,
+  StartDuoChatParams,
   User,
 } from 'services/user/user.types';
 
@@ -115,11 +116,11 @@ export const getChatWithSpecificUser = async (userId: string) => {
 export const startDuoChat = async (userId: string) => {
   try {
     const instanceBearer = await getInstanceBearer();
-    const { data } = await instanceBearer.get<{ chatId: string }>(
+    const { data } = await instanceBearer.get<StartDuoChatParams>(
       `/user/duo-chats/start/${userId}`,
     );
 
-    return data;
+    return data.chatId;
   } catch (error) {
     throw new Error(`Unable to start duo chat ${error}`);
   }
