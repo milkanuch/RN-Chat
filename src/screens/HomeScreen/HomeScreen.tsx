@@ -16,11 +16,11 @@ import {
   EMPTY_CONTENT_MAIN_BUTTON,
   EMPTY_CONTENT_TITLE,
   HIDE_BUTTON_COLOR,
-  MODAL_HIDE_BUTTON_SIZE,
+  IS_MODAL_TRANSPARENT,
   MODAL_HIDE_BUTTON_ICON,
+  MODAL_HIDE_BUTTON_SIZE,
   MODAL_SEARCH_BUTTON_ICON,
   MODAL_SEARCH_BUTTON_SIZE,
-  IS_MODAL_TRANSPARENT,
 } from 'screens/HomeScreen/homeScreen.settings';
 import { styles } from 'screens/HomeScreen/homeScreen.styles';
 
@@ -30,6 +30,7 @@ import {
   findUserByPhone,
   getAllDuoChats,
   getChatWithSpecificUser,
+  getUserAvatarById,
   startDuoChat,
 } from 'services/user/user';
 import { DuoChatWithUsers, User } from 'services/user/user.types';
@@ -48,13 +49,18 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
   const fetchData = useCallback(async () => {
     const fetchDuoChats = await getAllDuoChats();
 
-    fetchDuoChats.map(async chat => {
-      chat.avatar = 'https://i.ibb.co/JmcPzQm/user-default-av.png';
-      const lastMessageTime = new Date(chat.lastMessageTime as string);
-
-      chat.lastMessageTime = lastMessageTime.toLocaleDateString();
-    });
+    for (let i = 0; i < fetchDuoChats.length; i++) {
+      fetchDuoChats[i].lastMessageTime = new Date(
+        fetchDuoChats[i].lastMessageTime as string,
+      ).toLocaleDateString();
+      if (!chats[i]?.avatar) {
+        fetchDuoChats[i].avatar = await getUserAvatarById(
+          fetchDuoChats[i].userId,
+        );
+      }
+    }
     setChats(fetchDuoChats);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useFocusEffect(
