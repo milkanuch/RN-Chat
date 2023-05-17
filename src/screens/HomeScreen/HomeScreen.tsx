@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChatItemProps } from 'components/ChatItem/chatItem.types';
 import { ChatList } from 'components/ChatList/ChatList';
 import { CustomButton } from 'components/CustomButton/CustomButton';
+import { ButtonSize } from 'components/CustomButton/customButton.types';
 import { HomeScreenHeader } from 'components/HomeScreenHeader/HomeScreenHeader';
 import { PhoneNumberInput } from 'components/PhoneNumberInput/PhoneNumberInput';
 
@@ -89,9 +90,9 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
       try {
         chat = await getChatWithSpecificUser(user.id);
       } catch (error) {
-        const newChat = await startDuoChat(user.id);
+        const newChatId = await startDuoChat(user.id);
 
-        chat = { id: newChat.chatId } as DuoChatWithUsers;
+        chat = { id: newChatId } as DuoChatWithUsers;
       }
       handleOpenChat(chat.id);
       setModalVisible(!modalVisible);
@@ -128,9 +129,12 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
               value={phoneNumber}
             />
             <CustomButton
+              buttonType={ButtonSize.small}
               icon={MODAL_SEARCH_BUTTON_ICON}
               iconSize={MODAL_SEARCH_BUTTON_SIZE}
               onPress={handleSearchUserByPhone}
+              style={styles.searchButton}
+              title={'Search'}
             />
           </View>
         </View>

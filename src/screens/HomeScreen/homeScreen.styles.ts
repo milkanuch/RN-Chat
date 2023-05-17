@@ -28,4 +28,11 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.24,
     shadowRadius: 4,
   },
+  searchButton: {
+    alignItems: 'center',
+    backgroundColor: COLORS.blue,
+    borderRadius: SIZES.XS,
+    flexDirection: 'row-reverse',
+    padding: SIZES.XXXXS,
+  },
 });

@@ -47,3 +47,7 @@ export interface GroupChatResponseParams {
   membersCount: number;
   membersLimit: number;
 }
+
+export interface StartDuoChatParams {
+  chatId: string;
+}
