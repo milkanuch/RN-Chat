@@ -19,8 +19,10 @@ import {
   IS_MODAL_TRANSPARENT,
   MODAL_HIDE_BUTTON_ICON,
   MODAL_HIDE_BUTTON_SIZE,
+  MODAL_SEARCH_BUTTON_ICON_COLOR,
   MODAL_SEARCH_BUTTON_ICON,
   MODAL_SEARCH_BUTTON_SIZE,
+  MODAL_SEARCH_BUTTON_TITLE,
 } from 'screens/HomeScreen/homeScreen.settings';
 import { styles } from 'screens/HomeScreen/homeScreen.styles';
 
@@ -137,10 +139,11 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
             <CustomButton
               buttonType={ButtonSize.small}
               icon={MODAL_SEARCH_BUTTON_ICON}
+              iconColor={MODAL_SEARCH_BUTTON_ICON_COLOR}
               iconSize={MODAL_SEARCH_BUTTON_SIZE}
               onPress={handleSearchUserByPhone}
               style={styles.searchButton}
-              title={'Search'}
+              title={MODAL_SEARCH_BUTTON_TITLE}
             />
           </View>
         </View>
