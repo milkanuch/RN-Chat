@@ -34,5 +34,6 @@ export const styles = StyleSheet.create({
     borderRadius: SIZES.XS,
     flexDirection: 'row-reverse',
     padding: SIZES.XXXXS,
+    paddingHorizontal: SIZES.XXS,
   },
 });

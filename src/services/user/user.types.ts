@@ -55,3 +55,7 @@ export interface GroupChatResponseParams {
 export interface StartDuoChatParams {
   chatId: string;
 }
+
+export interface AvatarResponseParams {
+  encodedContent: string;
+}

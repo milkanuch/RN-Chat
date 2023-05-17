@@ -16,6 +16,7 @@ export const CustomButton: FC<CustomButtonProps> = ({
   iconSize,
   isLoading,
   buttonType = ButtonSize.large,
+  iconColor,
   ...props
 }) => (
   <TouchableOpacity
@@ -23,7 +24,7 @@ export const CustomButton: FC<CustomButtonProps> = ({
     style={[styles.button, !!icon && styles.icon]}
     {...props}>
     {!!icon && !isLoading && (
-      <Icon name={icon} size={iconSize} style={styles.icon} />
+      <Icon color={iconColor} name={icon} size={iconSize} style={styles.icon} />
     )}
     {!!title && !isLoading && (
       <Text style={[styles[buttonType], styles.text]}>{title}</Text>

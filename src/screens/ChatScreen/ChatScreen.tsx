@@ -42,7 +42,12 @@ import { OPEN_SOCKET_URI } from 'services/sockets/sockets';
 import { RECONNECT_TIMEOUT } from 'services/sockets/sockets.settings';
 import { getStorageItem } from 'services/storage/storage';
 import { storageKeys } from 'services/storage/storage.types';
-import { getChatById, getMessages, getUserId } from 'services/user/user';
+import {
+  getChatById,
+  getMessages,
+  getUserAvatarById,
+  getUserId,
+} from 'services/user/user';
 import {
   DuoChatWithUsers,
   MessagesRequestParams,
@@ -75,20 +80,22 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
 
     if (fetchChat && userId && data) {
       setChat(fetchChat);
-      fetchChat.users.map(user => {
-        user.avatar = 'https://i.ibb.co/JmcPzQm/user-default-av.png';
-      });
+
       await connectToSocket(userId);
       const [fetchUser, fetchRecipient] =
         fetchChat.users[0].id === userId
           ? fetchChat.users
           : fetchChat.users.reverse();
 
+      fetchUser.avatar = user.avatar = await getUserAvatarById(fetchUser.id);
+      fetchRecipient.avatar = recipient.avatar = await getUserAvatarById(
+        fetchRecipient.id,
+      );
       setUser(fetchUser);
       setRecipient(fetchRecipient);
       const loadMessages: IMessage[] = [];
 
-      data.messages.map(message => {
+      data.messages.map(async message => {
         loadMessages.push({
           _id: message.id,
           text: message.body,
@@ -96,7 +103,6 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
           user: {
             _id: message.sender.id,
             name: message.sender.nickname,
-            avatar: 'https://i.ibb.co/JmcPzQm/user-default-av.png',
           },
         });
       });
@@ -150,7 +156,6 @@ export const ChatScreen: FC<ChatScreenProp> = ({ route }) => {
           user: {
             _id: message.sender.id,
             name: message.sender.nickname,
-            avatar: 'https://i.ibb.co/JmcPzQm/user-default-av.png',
           },
         },
       ]);

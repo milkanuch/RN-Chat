@@ -2,6 +2,7 @@ import { ChatItemProps } from 'components/ChatItem/chatItem.types';
 
 import { getInstanceBearer } from 'services/index';
 import {
+  AvatarResponseParams,
   DuoChatWithUsers,
   FindUserParams,
   MessageResponseParams,
@@ -169,5 +170,18 @@ export const getAllGroupChats = async () => {
     return data;
   } catch (error) {
     throw new Error(`Unable to get all group chats ${error}`);
+  }
+};
+
+export const getUserAvatarById = async (userId: string) => {
+  try {
+    const instanceBearer = await getInstanceBearer();
+    const { data } = await instanceBearer.get<AvatarResponseParams>(
+      `/user/${userId}/avatar`,
+    );
+
+    return data.encodedContent;
+  } catch (error) {
+    throw new Error(`Unable to get user avatar by id ${error}`);
   }
 };
