@@ -1,12 +1,13 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true, 
+    "strict": true,
     "baseUrl": ".",
     "skipLibCheck": true,
     "paths": {
       "components/*": ["src/components/*"],
       "constants/*": ["src/constants/*"],
+      "containers/*": ["src/containers/*"],
       "navigation/*": ["src/navigation/*"],
       "screens/*": ["src/screens/*"],
       "services/*": ["src/services/*"],
