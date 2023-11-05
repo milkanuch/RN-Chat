@@ -162,7 +162,9 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
             />
           )}
         />
-        <View style={styles.inputContainer}>
+        <View
+          style={styles.inputContainer}
+          testID={TEST_ID.PASSWORD_CONTROLLER}>
           <Controller
             control={control}
             defaultValue={DEFAULT_VALUE}
