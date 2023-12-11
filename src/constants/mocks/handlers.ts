@@ -10,13 +10,15 @@ import { STATUSES } from 'constants/mocks/mocks';
 
 export const MOCKED_HANDLERS: RestHandler[] = [
   rest.get(
-    `${process.env.API_URL}/auth/exists/+3801234567890`,
+    `http://localhost/auth/exists/:phone`,
     (
       request: RestRequest,
       response: ResponseComposition,
       restContext: RestContext,
     ) => {
-      if (request.url.searchParams.get('phone') === '+380979999999') {
+      const phoneNumberFromRequestUrl = request.url.href.split('/').pop();
+
+      if (phoneNumberFromRequestUrl === '+380979999999') {
         return response(restContext.status(STATUSES.OK));
       }
 
@@ -24,7 +26,7 @@ export const MOCKED_HANDLERS: RestHandler[] = [
     },
   ),
   rest.post(
-    '/auth/login',
+    'http://localhost/auth/auth/login',
     (
       request: RestRequest,
       response: ResponseComposition,

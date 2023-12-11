@@ -16,6 +16,8 @@ export const StackContainer: FC<StackContainerProps> = ({
   return (
     <NavigationContainer>
       <Navigator screenOptions={NAVIGATOR_SCREEN_OPTIONS}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
         <Screen component={screen} name={screenName} options={screenOptions} />
       </Navigator>
     </NavigationContainer>
