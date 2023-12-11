@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -30,18 +30,18 @@ import {
 } from './signInScreen.utils';
 
 import {
-  FORM_MODE,
+  BUTTON_HEIGHT,
+  CONFIRM_PASSWORD_SETTINGS,
+  CONTINUE_TITLE,
   DEFAULT_VALUE,
+  FORM_MODE,
   PASSWORD_SETTINGS,
   PHONE_NUMBER_SETTINGS,
-  CONFIRM_PASSWORD_SETTINGS,
+  PROGRESS_ANIMATION_DURATION,
   SHAKE_ANIMATION,
   SHAKE_ANIMATION_CONFIG,
-  PROGRESS_ANIMATION_DURATION,
-  TITLE,
-  BUTTON_HEIGHT,
-  CONTINUE_TITLE,
   SIGN_UP_TITLE,
+  TITLE,
 } from './signInScreen.settings';
 import { styles } from './signInScreen.styles';
 import { SignInForm } from './signInScreen.types';
@@ -148,7 +148,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.screen} testID={TEST_ID.CONTAINER}>
       <Title containerStyle={styles.titleContainer} title={TITLE} />
-      <View style={styles.container}>
+      <View style={styles.container} testID={TEST_ID.PHONE_NUMBER_CONTROLLER}>
         <Controller
           control={control}
           defaultValue={DEFAULT_VALUE}
