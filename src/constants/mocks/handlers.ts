@@ -26,14 +26,22 @@ export const MOCKED_HANDLERS: RestHandler[] = [
     },
   ),
   rest.post(
-    'http://localhost/auth/auth/login',
+    'http://localhost/auth/login',
     (
       request: RestRequest,
       response: ResponseComposition,
       restContext: RestContext,
     ) => {
+      if (!JSON.stringify(request.body).length) {
+        return response(restContext.status(STATUSES.BAD_REQUEST));
+      }
+
       return response(
         restContext.json({
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          accessTokenExpiration: 'accessTokenExpiration',
+          refreshTokenExpiration: 'refreshTokenExpiration',
           isRegistered: true,
         }),
       );

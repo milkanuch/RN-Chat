@@ -66,7 +66,8 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
 
   const values = getValues();
   const buttonTitle = isUserRegistered ? CONTINUE_TITLE : SIGN_UP_TITLE;
-  const isButtonDisabled = !!Object.keys(errors).length;
+  //NOTE: Comment for testing purpose
+  // const isButtonDisabled = !!Object.keys(errors).length;
 
   useEffect(() => {
     authorizationProgress.value = withTiming(
@@ -210,7 +211,7 @@ export const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
 
         <AnimatedButton
           animatedStyle={buttonShakeStyle}
-          disabled={isButtonDisabled}
+          // disabled={isButtonDisabled}
           isLoading={isLoading}
           onPress={handleContinue}
           style={styles.button}
