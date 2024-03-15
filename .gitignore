@@ -20,3 +20,5 @@ package-lock.json
 
 # Tests Coverage
 coverage/
+
+.idea

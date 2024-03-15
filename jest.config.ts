@@ -1,5 +1,7 @@
 import type { Config } from 'jest';
 
+const IGNORE_PATTERN =
+  'node_modules/(?!(jest-)?@?react-native|@react-native-community|expo|@expo/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@react-navigation|@react-navigation/.*|(jest-)?@?react-native|@react-native-community)';
 const config: Config = {
   verbose: true,
   clearMocks: true,
@@ -14,10 +16,13 @@ const config: Config = {
     '!.prettierrc.js',
   ],
   coverageReporters: ['json-summary'],
-  //SOURCE: https://docs.expo.dev/guides/testing-with-jest/#configuration
-  transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',
+  setupFilesAfterEnv: [
+    './jest.setup.js',
+    './src/constants/mocks/server.ts',
+    './node_modules/react-native-gesture-handler/jestSetup.js',
   ],
+  //SOURCE: https://docs.expo.dev/guides/testing-with-jest/#configuration
+  transformIgnorePatterns: [IGNORE_PATTERN],
 };
 
 module.exports = config;
